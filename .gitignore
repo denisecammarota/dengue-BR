@@ -1,0 +1,11 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+#all zip files
+*.zip
+
+#zip data
+datasinan/database/auxs/zip_files_yearly_and_allstations
+Data/
