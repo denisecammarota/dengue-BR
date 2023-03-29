@@ -10,6 +10,11 @@ import os
 import sys 
 import glob
 
+# adding path to runtime 
+sys.path.insert(1, './fct/')
+
+# importing functions in fct folder
+from process_dates import process_dates 
 
 def cases_municipio(id_municip):
     # find all files
@@ -32,7 +37,9 @@ def cases_municipio(id_municip):
             data_filtered_2 = data_filtered_1.groupby(['SIN_WEEK','SIN_YEAR']).size()
             data_filtered_3 = data_filtered_2.to_frame(name = 'CASES').reset_index()
             # appending to the final results 
-            data_total = data_total.append(data_filtered_3)     
+            data_total = data_total.append(data_filtered_3)
+    # after all years are processed, we group data
+    data_total = process_dates(data_total)
     # save in a different path
     path_save = 'Data/'+str(id_municip)+'/'
     file_save = path_save+str(id_municip)+'_total.csv'
@@ -40,5 +47,5 @@ def cases_municipio(id_municip):
         os.makedirs(path_save)
     data_total.to_csv(file_save, sep=';')
     
-    
+
 cases_municipio(id_municip = 431490)
