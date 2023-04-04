@@ -12,10 +12,10 @@ def process_imported(data_filtered_3, data_filtered_1, year):
         df = df.replace(' ',3)
         df['TPAUTOCTO'] = df['TPAUTOCTO'].astype(int)
         df['CASES'] = df['CASES'].astype(int)
-        df['new'] = df['TPAUTOCTO'].isin([1])
+        df['new'] = df['TPAUTOCTO'].isin([2])
         df['new'] = df['new'].astype(int)
         # counting number of imported cases
-        df['new_2'] = df['new']*df['TPAUTOCTO']*df['CASES']
+        df['new_2'] = df['new']*(df['TPAUTOCTO']-1)*df['CASES']
         df = df.groupby(['SIN_WEEK','SIN_YEAR'])['new_2'].sum()
         df = df.to_frame(name = 'IMPORTED').reset_index()
         df['CASES'] = data_filtered_3['CASES']
