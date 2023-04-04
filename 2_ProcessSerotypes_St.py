@@ -36,7 +36,7 @@ def serotype_states():
         g['SG_UF_NOT'] = g['SG_UF_NOT'].replace(dict_states)
         data_total = data_total.append(g)
     
-    path_save = 'Data/DataBR_Processed/'
+    path_save = 'Data/'
     file_save =  path_save+'dengue_BR_serotypes.csv'
     if(not(os.path.exists(path_save))):
         os.makedirs(path_save)

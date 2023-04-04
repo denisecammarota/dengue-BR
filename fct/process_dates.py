@@ -17,6 +17,7 @@ def process_dates(df):
     list_week = []
     list_begin = []
     list_cases = []
+    list_imported = []
 
 
     for year in years:
@@ -33,11 +34,13 @@ def process_dates(df):
             df_tmp = df[filt_df]
             if df_tmp.empty == False:
                 list_cases.append(df_tmp.iloc[0]['CASES'])
+                list_imported.append(df_tmp.iloc[0]['IMPORTED'])
             else:
                 list_cases.append(0)
+                list_imported.append(0)
 
-    df_final = pd.DataFrame(list(zip(list_year, list_week, list_begin, list_cases)),
-                   columns =['SIN_YEAR', 'SIN_WEEK', 'FIRST_DAY', 'CASES'])
+    df_final = pd.DataFrame(list(zip(list_year, list_week, list_begin, list_cases, list_imported)),
+                   columns =['SIN_YEAR', 'SIN_WEEK', 'FIRST_DAY', 'CASES','IMPORTED'])
 
     return df_final
 
