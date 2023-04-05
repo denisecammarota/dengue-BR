@@ -32,7 +32,8 @@ def serotype_states():
         g = g.to_frame(name = 'NUMBER').reset_index()
         g['YEAR'] = year
         
-        
+        g = g[g['SG_UF_NOT'] != '  ']
+        g['SG_UF_NOT'] = g['SG_UF_NOT'].astype(int)
         g['SG_UF_NOT'] = g['SG_UF_NOT'].replace(dict_states)
         data_total = data_total.append(g)
     
