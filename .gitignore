@@ -9,3 +9,5 @@
 #zip data
 datasinan/database/auxs/zip_files_yearly_and_allstations
 Data/
+notebooks/Serotypes_States.ipynb
+notebooks/.ipynb_checkpoints/Serotypes_States-checkpoint.ipynb
