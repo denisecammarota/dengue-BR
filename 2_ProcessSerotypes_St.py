@@ -37,6 +37,8 @@ def serotype_states():
         g['SG_UF_NOT'] = g['SG_UF_NOT'].replace(dict_states)
         data_total = data_total.append(g)
     
+    data_total_grouped = data_total.groupby(['YEAR','SOROTIPO','SG_UF_NOT'])['NUMBER'].sum()
+    data_total_grouped = data_total_grouped.to_frame(name = 'NUMBER').reset_index()
     path_save = 'Data/'
     file_save =  path_save+'dengue_BR_serotypes.csv'
     if(not(os.path.exists(path_save))):
