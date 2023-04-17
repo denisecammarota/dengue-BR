@@ -1,4 +1,5 @@
 # Serotype ocurrence as whole for all states for each year, separated by state
+# and also by each municipality in each state 
 # years 2007 to 2021, sorotipo available for all these times
 # Code developed by Denise Cammarota
 
@@ -28,22 +29,30 @@ def serotype_states():
                                 parse_dates = ['DT_SIN_PRI','SEM_PRI','DT_NOTIFIC','SEM_NOT'])
         data_test = data_test.drop(columns = ['Unnamed: 0'])
         
-        g = data_test.groupby(['SG_UF_NOT','SOROTIPO'])['SOROTIPO'].size()
+        g = data_test.groupby(['SG_UF_NOT','ID_MUNICIP','SOROTIPO'])['SOROTIPO'].size()
         g = g.to_frame(name = 'NUMBER').reset_index()
         g['YEAR'] = year
         
         g = g[g['SG_UF_NOT'] != '  ']
         g['SG_UF_NOT'] = g['SG_UF_NOT'].astype(int)
-        g['SG_UF_NOT'] = g['SG_UF_NOT'].replace(dict_states)
+        g['UF_NAME'] = g['SG_UF_NOT'].replace(dict_states)
         data_total = data_total.append(g)
-    
-    data_total_grouped = data_total.groupby(['YEAR','SOROTIPO','SG_UF_NOT'])['NUMBER'].sum()
+    data_total_grouped = data_total.groupby(['YEAR','SOROTIPO','SG_UF_NOT', 'UF_NAME','ID_MUNICIP'])['NUMBER'].sum()
     data_total_grouped = data_total_grouped.to_frame(name = 'NUMBER').reset_index()
+    # create final dataframe
+    data_final = pd.DataFrame()
+    #filter out errors in municipality not being consistent with state
+    data_total_grouped['ID_MUNICIP'] = data_total_grouped['ID_MUNICIP'].astype(str)
+    for i in data_total_grouped['SG_UF_NOT'].unique():
+        df_tmp = data_total_grouped[data_total_grouped['SG_UF_NOT'] == i]
+        df_tmp = df_tmp[df_tmp['ID_MUNICIP'].str.startswith(str(i))]
+        data_final = data_final.append(df_tmp)
+    data_final['ID_MUNICIP'] = data_final['ID_MUNICIP'].astype(int)
     path_save = 'Data/'
     file_save =  path_save+'dengue_BR_serotypes.csv'
     if(not(os.path.exists(path_save))):
         os.makedirs(path_save)
-    data_total.to_csv(file_save, sep=';')
-
+    data_final.to_csv(file_save, sep=';')
+    
 serotype_states()
     
