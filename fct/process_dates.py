@@ -10,6 +10,8 @@ import pandas as pd
 def process_dates(df):
     min_year = min(df['SIN_YEAR'])
     max_year = max(df['SIN_YEAR'])
+    if(max_year > 2021):
+        max_year = 2021
     years = np.arange(min_year,max_year+1,1)
 
     # generate weeks for each years and count cases 
