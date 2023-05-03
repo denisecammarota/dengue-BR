@@ -22,6 +22,7 @@ def process_municipality(id_municip):
     for file in files:
         # find year corresponding to file
         year = int(file[-8:-4])
+        print(year)
         # reading data 
         data_test = pd.read_csv(file, 
                                 delimiter = ';',
@@ -40,11 +41,12 @@ def process_municipality(id_municip):
             data_filtered_4 = process_imported(data_filtered_3, data_filtered_1, year)
             # appending to the final results 
             data_total = data_total.append(data_filtered_4)
+    print(data_total['SIN_YEAR'].unique())
     # after all years are processed, we put initial week date
     data_total = process_dates(data_total)
     # save in a different path
     path_save = 'Data/'+str(id_municip)+'/'
-    file_save = path_save+str(id_municip)+'_total.csv'
+    file_save = path_save+str(id_municip)+'.csv'
     if(not(os.path.exists(path_save))):
         os.makedirs(path_save)
     data_total.to_csv(file_save, sep=';')
