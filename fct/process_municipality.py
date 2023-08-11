@@ -44,7 +44,7 @@ def process_municipality(id_municip):
     data_total = process_dates(data_total)
     # save in a different path
     path_save = 'Data/'+str(id_municip)+'/'
-    file_save = path_save+str(id_municip)+'total_old.csv'
+    file_save = path_save+str(id_municip)+'total_new.csv'
     if(not(os.path.exists(path_save))):
         os.makedirs(path_save)
     data_total.to_csv(file_save, sep=';')
