@@ -12,10 +12,11 @@ import glob
 
 def clean_data_total():
     files = glob.glob('./Data/DataBR/*.csv')
+    files = files[-3:] # years after 2021
     for file in files:
         # reading data 
         data_test = pd.read_csv(file, 
-                                delimiter = ';',
+                                delimiter = ',',
                                 index_col=False,
                                 parse_dates = ['DT_SIN_PRI','SEM_PRI','DT_NOTIFIC','SEM_NOT'])
         # get the year we are working with in question

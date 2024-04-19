@@ -50,7 +50,7 @@ def serotype_RJ(id_mun):
     
     return data_total_grouped, df_aux
     
-id_mun = 330455
+id_mun = 355030
 df_data, df_aux = serotype_RJ(id_mun)
     
 df_aux = df_aux.merge(df_data, how = 'left', on = 'SEM_PRI')
@@ -67,4 +67,4 @@ df_copy = df_copy.reset_index()
 df_copy = df_copy.fillna(0)
 df_copy['CASES'] = df_copy[0] + df_copy['1'] + df_copy['2'] + df_copy['3'] + df_copy['4']
 
-df_copy.to_csv('serotypes_RJ.csv')
+df_copy.to_csv('serotypes_SP.csv')
