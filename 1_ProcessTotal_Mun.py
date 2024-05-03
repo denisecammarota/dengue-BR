@@ -18,5 +18,5 @@ from process_dates import process_dates
 from process_imported import process_imported
 from process_municipality import process_municipality
 
-process_municipality(id_municip = 355030) # são paulo
-process_municipality(id_municip = 330455) # rio de janeiro
+process_municipality(id_municip = '3550308', sorotipo = True) # são paulo
+process_municipality(id_municip = '3304557') # rio de janeiro

@@ -12,20 +12,26 @@ from epiweeks import Year
 
 def serotype_RJ(id_mun):
     # years we use for analysis
-    years = np.arange(2007,2022,1)
+    years = np.arange(2007,2024,1)
     data_total = pd.DataFrame()
     # processing for each state and each year
     for year in years:
         file_path = 'Data/DataBR_Processed/dengue_BR_'+str(year)+'.csv'
-        
+        # find year corresponding to file
+        if(year >= 2007):
+            id_mun_real = id_mun[0:6]
+        else:
+            id_mun_real = id_mun
         data_test = pd.read_csv(file_path, 
                                 delimiter = ';',
                                 index_col=False,
                                 parse_dates = ['DT_SIN_PRI','SEM_PRI','DT_NOTIFIC','SEM_NOT'])
         data_test = data_test.drop(columns = ['Unnamed: 0'])
+        filt_df1 = (data_test['ID_MN_RESI'] == id_mun_real)
+        data_test = data_test[filt_df1]
         data_total = data_total.append(data_test)
     
-    data_total = data_total[data_total['ID_MUNICIP'] == 330455]
+    #data_total = data_total[data_total['ID_MN_RESI'] == 330455]
     data_total['NUMBER'] = 1
     
     data_total_grouped = data_total.groupby(['SEM_PRI','SOROTIPO'])['NUMBER'].sum()
@@ -50,7 +56,7 @@ def serotype_RJ(id_mun):
     
     return data_total_grouped, df_aux
     
-id_mun = 355030
+id_mun = '3550308'
 df_data, df_aux = serotype_RJ(id_mun)
     
 df_aux = df_aux.merge(df_data, how = 'left', on = 'SEM_PRI')
